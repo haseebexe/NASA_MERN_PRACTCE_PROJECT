@@ -23,7 +23,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(planetsRouter)
-app.use(launchesRouter)
+app.use("/planets", planetsRouter)
+app.use("/launches", launchesRouter)
 
 module.exports = app;
