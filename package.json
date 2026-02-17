@@ -10,8 +10,9 @@
     "client": "npm run start --prefix client",
     "server": "npm run watch --prefix server",
     "watch": "concurrently \"npm run client\"  \"npm run server\"",
-    "test": "concurrently \"npm run test --prefix client\"  \"npm run test --prefix server\"",
-    "deploy": "concurrently \"npm run build --prefix client\" \"npm run start --prefix server\" "
+    "test": "concurrently \"npm test --prefix client\"  \"npm test --prefix server\"",
+    "deploy": "concurrently \"npm run build --prefix client\" \"npm run start --prefix server\" ",
+    "deploy-cluster": "concurrently \"npm run build --prefix client\" \"npm run cluster --prefix server\" "
   },
   "keywords": [],
   "author": "",
