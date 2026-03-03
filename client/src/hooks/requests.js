@@ -1,5 +1,5 @@
 // Load planets and return as JSON.
-const API_BASE_URL = "http://localhost:8000";
+const API_BASE_URL = "http://localhost:8000/v1";
 
 async function httpGetPlanets() {
   const response = await fetch(`${API_BASE_URL}/planets`);
