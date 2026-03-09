@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
+require('dotenv').config();
 
-const MONGO_URL = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@nasacluster.zwawkr6.mongodb.net/${process.env.DB_NAME}?appName=NasaCluster`;
+const MONGO_URL = process.env.MONGO_URL;
 
 
 mongoose.connection.once("open", () => {

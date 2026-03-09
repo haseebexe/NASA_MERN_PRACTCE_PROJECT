@@ -6,20 +6,9 @@ const axios = require("axios");
 
 let DEFAULT_FLIGHT_NUMBER = 100;
 
-const launch = {
-  flightNumber: 100, // flight_number
-  mission: "Kepler Exploration X", // name
-  rocket: "Explorer IS1", // rocket.name
-  launchDate: new Date("December 27, 2030"), // date_local
-  target: "Kepler-442 b", // not applicable
-  customer: ["ZTM", "NASA"], // payloads.customers
-  upcoming: true, // upcoming
-  success: true, // success
-};
+
 
 const SPACEX_API_URL = "https://api.spacexdata.com/v4/launches/query";
-
-saveLaunch(launch);
 
 async function populateLaunches() {
   console.log("Downloading launches data");
@@ -53,7 +42,7 @@ async function populateLaunches() {
 
   for (const launchDoc of launchDocs) {
     const payloads = launchDoc["payloads"];
-    const customers = payloads.flatMap((payload) => {
+    const customer = payloads.flatMap((payload) => {
       return payload.customers;
     });
 
@@ -64,7 +53,7 @@ async function populateLaunches() {
       launchDate: launchDoc["date_local"],
       upcoming: launchDoc["upcoming"],
       success: launchDoc["success"],
-      customers: customers,
+      customer,
     };
 
     await saveLaunch(launch);
@@ -109,14 +98,17 @@ async function getLatestFlightNumber() {
   return latestFlightNumber.flightNumber;
 }
 
-async function getAllLaunches() {
+async function getAllLaunches(skip, limit) {
   return await launchesDatabase.find(
     {},
     {
       _id: 0,
       __v: 0,
     },
-  );
+  )
+  .sort({ flightNumber: 1 })
+  .skip(skip)
+  .limit(limit);
 }
 
 async function saveLaunch(launch) {
